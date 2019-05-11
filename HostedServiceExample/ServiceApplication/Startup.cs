@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ServiceApplication.Application;
+using ServiceApplication.HostedServices;
 
 namespace ServiceApplication
 {
@@ -31,6 +33,11 @@ namespace ServiceApplication
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // add hosted services
+            services.AddHostedService<TimedHostedService>();
+
+            // add other services to DI
+            services.AddScoped<IServiceWorker, ServiceWorker>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
