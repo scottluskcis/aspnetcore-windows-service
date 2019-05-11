@@ -15,6 +15,9 @@ namespace ServiceApplication.HostedServices
 
         public IServiceProvider Services { get; }
 
+        // work every 10 seconds, you could pull this from config settings
+        const int TimerIntervalSeconds = 10;
+
         public TimedHostedService(IServiceProvider services, ILogger<TimedHostedService> logger)
         {
             Services = services;
@@ -26,7 +29,7 @@ namespace ServiceApplication.HostedServices
             _logger.LogInformation("Timed Background Service is starting.");
 
             _timer = new Timer(DoWork, null, TimeSpan.Zero, 
-                TimeSpan.FromSeconds(5));
+                TimeSpan.FromSeconds(TimerIntervalSeconds));
 
             return Task.CompletedTask;
         }
